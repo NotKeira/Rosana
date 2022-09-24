@@ -13,7 +13,7 @@
 
   "prefix": ";",
 
-  "MONGODBSRV": "mongodb+srv://Keira:Database@cluster0.lz61q.mongodb.net/?retryWrites=true&w=majority",
+  "MONGODBSRV": 
 
   "creatorID": "801384603704623115",
 
