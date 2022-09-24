@@ -1,0 +1,5 @@
+const _embed = new MessageEmbed()
+  .setColor("#FC94AF")
+  .setTitle()
+  .setDescription()
+  .setTimestamp();

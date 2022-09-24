@@ -1,17 +1,21 @@
 const client = require("../index");
 const chalk = require("chalk");
-const { version: discordjsVersion } = require("discord.js");
+const {
+  version: discordjsVersion,
+  Client,
+  MessageEmbed,
+} = require("discord.js");
 const { prefix } = require("../botconfig/main.json");
 const main_json = require("../botconfig/main.json");
+var MongoClient = require("mongodb").MongoClient;
+var url = main_json.MONGODBSRV;
 
-client.on("ready", async () => {
-  const supportServer = client.guilds.cache.get(`${main_json.TestingServerID}`);
+client.on("ready", async (guild) => {
+  const supportServer = client.guilds.cache.get(`${main_json.ServerID}`);
   if (!supportServer) return console.log("");
   // ———————————————[Status]———————————————
   client.user.setActivity(
-    `${prefix}help || ${client.guilds.cache.size} ${
-      client.guilds.cache.size > 1 ? "Servers" : "Server"
-    }`,
+    `${prefix}help || HOLLY IS SEXY`,
     { type: "WATCHING" }
   );
   // ———————————————[Ready MSG]———————————————
@@ -57,3 +61,4 @@ client.on("ready", async () => {
     )
   );
 });
+

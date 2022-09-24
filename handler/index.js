@@ -39,7 +39,7 @@ module.exports = async (client) => {
   });
   client.on("ready", async () => {
     // Register for a single guild
-    if (mainjson.TestingServerID === "Your Server ID") {
+    if (mainjson.ServerID === "Your Server ID") {
       console.log(chalk.gray("—————————————————————————————————"));
       console.log(
         chalk.white("["),
@@ -55,7 +55,7 @@ module.exports = async (client) => {
           chalk.cyan("Go to ") +
           chalk.red.underline("botconfig/main.json") +
           chalk.cyan(" and put your \nSupportServer/TestServer ID in the") +
-          chalk.red(" TestingServerID String!")
+          chalk.red(" ServerID String!")
       );
       console.log(
         chalk.yellow.bold("2.) ") +
@@ -65,14 +65,9 @@ module.exports = async (client) => {
           ) +
           chalk.cyan(" in the else statement.")
       );
-      console.log(
-        chalk.green.bold("Still Need Help? Contact Me:\n") +
-          chalk.yellow.italic("Discord: DrakeZee#5223\n") +
-          chalk.yellow.italic("Discord Server: dsc.gg/botsway")
-      );
     } else {
       await client.guilds.cache
-        .get(mainjson.TestingServerID)
+        .get(mainjson.ServerID)
         .commands.set(arrayOfSlashCommands);
 
       // Register for all the guilds the bot is in
@@ -80,4 +75,3 @@ module.exports = async (client) => {
     }
   });
 };
-

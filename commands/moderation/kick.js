@@ -1,54 +1,90 @@
-const {
-    Client,
-    Message,
-    MessageEmbed,
-    Discord
-} = require('discord.js');
+const { Client, Message, MessageEmbed, Discord, Guild } = require("discord.js");
+const main_json = require("../../botconfig/main.json");
+var MongoClient = require("mongodb").MongoClient;
+var url = main_json.MONGODBSRV;
+const emoji = main_json.tickEmoji;
+const banemoji = main_json.banhammer;
+
 module.exports = {
-    name: "kick",
-    //Name Of The Command
-    aliases: ["kek","kck"],
-    //Aliases For Command.
-    cooldowns: 1000, //1 second
-    //Cooldown For The Command [Milliseconds]
-    description: "This Command Kicks a user.",
-    //Description Of The Command [The Purpose Etc...]
-    usage: "<user> <reason>",
-    //Usage For Command. [like ?nameOfTheCommand <user> <reason>]
-    toggleOff: false,
-    //Disable The Command If Emergency. [true = off | false = on]
-    developersOnly: false,
-    //If Command Is Only For Bot Owners. [true = yes | false = no]
-    /*
-     To Make Yourself Developer, Go Ahead to 
-     botconfig/main.json, set the ids in it. 
- */
-    userpermissions: ["SEND_MESSAGES", "VIEW_CHANNEL"],
-    //Permissions Required For The Author To Use The CMD.
-    botpermissions: ["ADMINISTRATOR"],
-    //Permissions Required For The Bot To Run The CMD.
-    run: async (client, message, args, Discord) => {
-        const user = message.mentions.members.first();
-        const reason = args.slice(1).join(' ');
-        const WaitKickEmbed = new MessageEmbed()
-        .setColor('#FC94AF')
-       .setTitle(`Failed to kick...`)
-       .setDescription(`Please provide a user to kick. `)
-       .setTimestamp()
-        const successKickEmbed = new MessageEmbed()
-        .setColor('#FC94AF')
-       .setTitle(`Banned!`)
-       .setDescription(`Kicked ${user} for:***${reason}***. `)
-       .setTimestamp()
-        if (!reason) return message.channel.send({embeds: [WaitKickEmbed]});
-        if (user) {
-            await user.kick({
-                reason: reason,
-            }).then(() => {
-                message.channel.send({embeds: [successKickEmbed] });
-            })
-        } else {
-            message.channel.send('cant find the user!')
-        }
+  name: "kick",
+  aliases: [],
+  cooldowns: 1000,
+  description: "This Command Kicks a user.",
+  usage: "<user> <reason>",
+  toggleOff: false,
+  developersOnly: false,
+  managerOnly: false,
+  modOnly: true,
+  userpermissions: ["SEND_MESSAGES", "VIEW_CHANNEL"],
+  botpermissions: ["ADMINISTRATOR"],
+  run: async (client, message, args, Discord) => {
+    const user = message.author.id;
+    const target = message.mentions.members.first();
+    const reason = args.slice(1).join(" ");
+    const server = Guild.name;
+
+    const WaitKick_Embed = new MessageEmbed()
+      .setColor("#FC94AF")
+      .setTitle(`:x: | ERROR`)
+      .setDescription(`Insufficient Args. `)
+      .setTimestamp()
+      .setFooter({ text: "Hosted With KiraHQ Tech" });
+
+    const successKick_Embed = new MessageEmbed()
+      .setColor("#FC94AF")
+      .setTitle(`${emoji} | SUCCESS`)
+      .setDescription(`Kicked ${target} From The Server.`)
+      .setTimestamp()
+      .setFooter({ text: "Hosted With KiraHQ Tech" });
+
+    const kicked_Embed = new MessageEmbed()
+      .setColor("#FC94AF")
+      .setTitle(`Kicked!`)
+      .setDescription(
+        `You have been kicked from ${server} for:***${reason}***. `
+      )
+      .setTimestamp()
+      .setFooter({ texT: "Hosted With KiraHQ Tech" });
+    if (!reason) return message.channel.send({ embeds: [WaitKick_Embed] });
+    if (user) {
+      target.send({ embeds: [kicked_Embed] });
+      await target
+        .kick({
+          reason: reason,
+        })
+        .then(() => {
+          message.channel.send({ embeds: [successKick_Embed] });
+          MongoClient.connect(url, function (err, db) {
+            if (err) throw err;
+            var dbo = db.db("data");
+            var amountoflogs = 0;
+            var logs = {
+              type: "Addition",
+              moderator: `${user}`,
+              target: `${target}`,
+              reason: `${reason}`,
+              channel: `${message.channel.id}`,
+            };
+            dbo.collection("kickLogs").insertOne(logs, function (err, res) {
+              if (err) throw err;
+              console.log("1 document inserted into Kick Logs.");
+            });
+            var logs = {
+              command: `KICK`,
+              moderator: `${user}`,
+              target: `${target}`,
+              reason: `${reason}`,
+              channel: `${message.channel.id}`,
+            };
+            dbo.collection("modLogs").insertOne(logs, function (err, res) {
+              if (err) throw err;
+              console.log("1 document inserted into Mod Logs.");
+              db.close();
+            });
+          });
+        });
+    } else {
+      message.channel.send("cant find the user!");
     }
-}
+  },
+};
