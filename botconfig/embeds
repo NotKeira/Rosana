@@ -1,0 +1,80 @@
+/**
+    const { MessageEmbed } = require("discord.js");
+    const noPermsEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`:x: | Insufficient Permissions!`)
+    .setDescription(`You Do Not Have Permission To Use That Command In This Server.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    // ---------------[BAN EMBEDS]---------------
+    
+    const waitBanEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`:x: | Error!`)
+    .setDescription(`You need to provide a user to ban. I can\'t ban air!`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const successBanEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`:white_checkmark: | Banned!`)
+    .setDescription(`Banned ${target} from the server for the reason:***${reason}***. `)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const successBanChannelEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`:white_checkmark: | Banishment!`)
+    .setDescription(`${user} got banned from the server for being a right old moron.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    // ---------------[INACTIVITY EMBEDS]---------------
+
+    const successfulIASendEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`Your inactivity notice has been sent!`)
+    .setDescription(`I will send you a Direct Message on the time when it gets a response.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const inactiveSentEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`${user}'s Inactivity Notice.`)
+    .addField(`Requesting Inactivity For: ${time} days.`)
+    .addField(`For the reason: ${reason}`)
+    .addFooter(`LOG ID: ${inLogID}`)
+    .setTimestamp()
+
+    // ---------------[PURGE EMBEDS]---------------
+
+    const purgeFailEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`Failed to purge due to...`)
+    .setDescription(`No amount to purge given.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const purgeFailEmbed2 = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`Failed to purge due to...`)
+    .setDescription(`Too many messages to purge.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const purgeFailEmbed3 = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`Failed to purge due to...`)
+    .setDescription(`:x: Messages are too old. (14 days+)`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+    const purgeSuccessEmbed = new MessageEmbed()
+    .setColor('#FC94AF')
+    .setTitle(`Purged Messages!`)
+    .setDescription(`\`${amount}\` messages have been purged.`)
+    .setTimestamp()
+    .setFooter({ text: "Hosted with KiraHQ"})
+
+*/
